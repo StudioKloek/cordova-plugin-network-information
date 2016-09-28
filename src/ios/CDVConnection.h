@@ -19,16 +19,16 @@
 
 #import <Foundation/Foundation.h>
 #import <Cordova/CDVPlugin.h>
-#import "CDVReachability.h"
+#import "Reachability.h"
 
 @interface CDVConnection : CDVPlugin {
     NSString* type;
     NSString* _callbackId;
 
-    CDVReachability* internetReach;
+    Reachability* internetReach;
 }
 
 @property (copy) NSString* connectionType;
-@property (strong) CDVReachability* internetReach;
+@property (strong) Reachability* internetReach;
 
 @end

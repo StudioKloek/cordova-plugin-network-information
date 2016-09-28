@@ -19,7 +19,7 @@
 #import <CoreTelephony/CTTelephonyNetworkInfo.h>
 
 #import "CDVConnection.h"
-#import "CDVReachability.h"
+#import "Reachability.h"
 
 @interface CDVConnection (PrivateMethods)
 - (void)updateOnlineStatus;
@@ -44,7 +44,7 @@
     [self.commandDelegate sendPluginResult:result callbackId:_callbackId];
 }
 
-- (NSString*)w3cConnectionTypeFor:(CDVReachability*)reachability
+- (NSString*)w3cConnectionTypeFor:(Reachability*)reachability
 {
     NetworkStatus networkStatus = [reachability currentReachabilityStatus];
 
@@ -103,7 +103,7 @@
            [theConnectionType isEqualToString:@"cellular"];
 }
 
-- (void)updateReachability:(CDVReachability*)reachability
+- (void)updateReachability:(Reachability*)reachability
 {
     if (reachability) {
         // check whether the connection type has changed
@@ -119,9 +119,9 @@
 
 - (void)updateConnectionType:(NSNotification*)note
 {
-    CDVReachability* curReach = [note object];
+    Reachability* curReach = [note object];
 
-    if ((curReach != nil) && [curReach isKindOfClass:[CDVReachability class]]) {
+    if ((curReach != nil) && [curReach isKindOfClass:[Reachability class]]) {
         [self updateReachability:curReach];
     }
 }
@@ -140,7 +140,7 @@
 - (void)pluginInitialize
 {
     self.connectionType = @"none";
-    self.internetReach = [CDVReachability reachabilityForInternetConnection];
+    self.internetReach = [Reachability reachabilityForInternetConnection];
     self.connectionType = [self w3cConnectionTypeFor:self.internetReach];
     [self.internetReach startNotifier];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateConnectionType:)
